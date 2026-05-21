@@ -1,0 +1,95 @@
+.dancing-cat-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.dancing-cat {
+  position: relative;
+  display: inline-block;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.cat-image {
+  width: 200px;
+  height: 240px;
+  display: block;
+  filter: drop-shadow(0 8px 24px rgba(244, 164, 96, 0.4));
+}
+
+/* 댄싱 애니메이션 */
+.dancing-cat.dancing .cat-image {
+  animation: catDance var(--dance-duration, 1s) ease-in-out infinite;
+}
+
+.dancing-cat.paused .cat-image {
+  animation: none;
+  transform: translateY(0) rotate(0deg) scale(1);
+}
+
+@keyframes catDance {
+  0%   { transform: translateY(0)    rotate(0deg)   scale(1); }
+  10%  { transform: translateY(-18px) rotate(-8deg)  scale(1.05); }
+  20%  { transform: translateY(-6px)  rotate(6deg)   scale(0.97); }
+  30%  { transform: translateY(-22px) rotate(-5deg)  scale(1.08); }
+  40%  { transform: translateY(-4px)  rotate(8deg)   scale(0.96); }
+  50%  { transform: translateY(-26px) rotate(-10deg) scale(1.1); }
+  60%  { transform: translateY(-4px)  rotate(7deg)   scale(0.97); }
+  70%  { transform: translateY(-18px) rotate(-6deg)  scale(1.05); }
+  80%  { transform: translateY(-8px)  rotate(5deg)   scale(0.98); }
+  90%  { transform: translateY(-14px) rotate(-4deg)  scale(1.03); }
+  100% { transform: translateY(0)    rotate(0deg)   scale(1); }
+}
+
+/* 음표 */
+.music-notes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.note {
+  position: absolute;
+  font-size: 1.4rem;
+  animation: floatNote 2s ease-out infinite;
+  opacity: 0;
+  color: #FFD700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+}
+
+.note.n1 { left: -30px; top: 20%; animation-delay: 0s;    animation-duration: 2s; }
+.note.n2 { right: -30px; top: 30%; animation-delay: 0.5s; animation-duration: 2.3s; }
+.note.n3 { left: -20px;  top: 50%; animation-delay: 1s;   animation-duration: 1.8s; }
+.note.n4 { right: -20px; top: 10%; animation-delay: 1.5s; animation-duration: 2.1s; }
+
+@keyframes floatNote {
+  0%   { opacity: 0;   transform: translateY(0)    scale(0.8); }
+  20%  { opacity: 1;   transform: translateY(-10px) scale(1); }
+  80%  { opacity: 0.7; transform: translateY(-40px) scale(1.1); }
+  100% { opacity: 0;   transform: translateY(-60px) scale(0.9); }
+}
+
+/* 무대 바닥 */
+.stage-floor {
+  width: 240px;
+  height: 12px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  border-radius: 50%;
+  margin-top: 4px;
+  animation: shadowPulse 1s ease-in-out infinite;
+}
+
+@keyframes shadowPulse {
+  0%, 100% { transform: scaleX(1);   opacity: 0.6; }
+  50%       { transform: scaleX(0.8); opacity: 0.3; }
+}
+
+.dancing-cat.paused + .stage-floor {
+  animation: none;
+  opacity: 0.4;
+}
